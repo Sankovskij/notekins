@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">notekins</string>
+    <string name="new_note">Новая заметка</string>
+</resources>

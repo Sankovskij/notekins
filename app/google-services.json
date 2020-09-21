@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "685306974143",
+    "firebase_url": "https://notekins-88bf1.firebaseio.com",
+    "project_id": "notekins-88bf1",
+    "storage_bucket": "notekins-88bf1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:685306974143:android:642fd34e4dc96244fa1b0a",
+        "android_client_info": {
+          "package_name": "app.kotlin.notekins"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "685306974143-drjipqdau5hj30addju4sab42vjn6jdi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAZ3L_3OdPx7U9fn5UVb08wBuTHETCWAE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "685306974143-drjipqdau5hj30addju4sab42vjn6jdi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
