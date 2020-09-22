@@ -35,7 +35,6 @@ class ListOfNotesFragment : DialogFragment() {
         adapter = NoteAdapter{
             viewModel.sendNote(it)
             viewModel.openEditingNoteFragment(parentFragmentManager)
-
         }
 
         rv_notes.adapter = adapter
