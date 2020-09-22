@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import app.kotlin.notekins.R
-import app.kotlin.notekins.model.Model
+import app.kotlin.notekins.firestore.NotesRepository
 import app.kotlin.notekins.model.Note
 import kotlinx.android.synthetic.main.note_editing_fragment.*
 import java.text.SimpleDateFormat
@@ -90,7 +90,7 @@ class NoteEditingFragment : Fragment() {
         titleEt.text?.let {
             if (it.length < 3) return
         } ?: return
-        Model.addOrReplace(note.copy(
+        NotesRepository.saveNote(note.copy(
             title = titleEt.text.toString(),
             text = bodyEt.text.toString(),
             lastChange = Date()))

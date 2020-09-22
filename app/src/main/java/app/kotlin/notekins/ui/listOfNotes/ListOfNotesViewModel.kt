@@ -3,9 +3,11 @@ package app.kotlin.notekins.ui.listOfNotes
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import app.kotlin.notekins.R
-import app.kotlin.notekins.model.Model
+import app.kotlin.notekins.firestore.NoteResult
+import app.kotlin.notekins.firestore.NotesRepository
 import app.kotlin.notekins.model.Note
 import app.kotlin.notekins.ui.noteEditing.NoteEditingFragment
 
@@ -18,8 +20,14 @@ class ListOfNotesViewModel : ViewModel() {
     }
 
     init {
-        Model.getNotes().observeForever {
-            hiddenNotes.value = it
+        NotesRepository.getNotes().observeForever {
+        when (it){
+            is NoteResult.Success<*> ->  hiddenNotes.value  = it.data as? List<Note>
+          //  is NoteResult.Error -> viewStateLiveData.value = MainViewState(error = result.error)
+        }
+
+
+
         }
     }
 
