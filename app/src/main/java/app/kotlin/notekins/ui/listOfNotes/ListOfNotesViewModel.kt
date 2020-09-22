@@ -1,5 +1,6 @@
 package app.kotlin.notekins.ui.listOfNotes
 
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,6 +15,7 @@ import app.kotlin.notekins.ui.noteEditing.NoteEditingFragment
 class ListOfNotesViewModel : ViewModel() {
 
     private val hiddenNotes = MutableLiveData<List<Note>>()
+    private val noteErrorMutable = MutableLiveData<Throwable>()
 
     companion object {
         lateinit var editingNoteLiveData: LiveData<Note>
@@ -23,15 +25,13 @@ class ListOfNotesViewModel : ViewModel() {
         NotesRepository.getNotes().observeForever {
         when (it){
             is NoteResult.Success<*> ->  hiddenNotes.value  = it.data as? List<Note>
-          //  is NoteResult.Error -> viewStateLiveData.value = MainViewState(error = result.error)
+            is NoteResult.Error -> noteErrorMutable.value = it.error
         }
-
-
-
         }
     }
 
     val notes: LiveData<List<Note>> = hiddenNotes
+     val noteError: LiveData<Throwable> = noteErrorMutable
 
     fun openEditingNoteFragment(fragmentManager: FragmentManager) {
         fragmentManager
