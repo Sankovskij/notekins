@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import app.kotlin.notekins.R
-import app.kotlin.notekins.model.Model
+import app.kotlin.notekins.firestore.NotesRepository
 import app.kotlin.notekins.model.Note
 import kotlinx.android.synthetic.main.note_editing_fragment.*
 import java.text.SimpleDateFormat
@@ -64,14 +64,14 @@ class NoteEditingFragment : Fragment() {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(p0: Editable?) {
-                saveNote(note)
+                viewModel.saveNote(note, titleEt.text, bodyEt.text)
             }
         })
         bodyEt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(p0: Editable?) {
-                saveNote(note)
+                viewModel.saveNote(note, titleEt.text, bodyEt.text)
             }
         })
     }
@@ -84,16 +84,6 @@ class NoteEditingFragment : Fragment() {
                 SimpleDateFormat(dateFormat, Locale.getDefault()).format(it.lastChange)
             } ?: getString(R.string.new_note)
         }
-    }
-
-    private fun saveNote(note : Note) {
-        titleEt.text?.let {
-            if (it.length < 3) return
-        } ?: return
-        Model.addOrReplace(note.copy(
-            title = titleEt.text.toString(),
-            text = bodyEt.text.toString(),
-            lastChange = Date()))
     }
 }
 
