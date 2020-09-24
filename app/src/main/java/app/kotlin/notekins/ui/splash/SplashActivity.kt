@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import app.kotlin.notekins.R
 import app.kotlin.notekins.firestore.NotesRepository
-import app.kotlin.notekins.ui.mainActivity.MainActivity
+import app.kotlin.notekins.ui.mainactivity.MainActivity
 import com.firebase.ui.auth.AuthUI
 
 class SplashActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package app.kotlin.notekins.ui.noteEditing
+package app.kotlin.notekins.ui.noteediting
 
 import android.text.Editable
 import androidx.lifecycle.LiveData
@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import app.kotlin.notekins.firestore.NotesRepository
 import app.kotlin.notekins.entity.Note
-import app.kotlin.notekins.ui.listOfNotes.ListOfNotesViewModel
+import app.kotlin.notekins.ui.listofnotes.ListOfNotesViewModel
 import java.util.*
 
 class NoteEditingViewModel : ViewModel() {
