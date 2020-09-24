@@ -1,16 +1,10 @@
-package app.kotlin.notekins.splash
+package app.kotlin.notekins.ui.splash
 
-import android.app.Activity
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
 import app.kotlin.notekins.R
-import app.kotlin.notekins.errors.NoAuthException
 import app.kotlin.notekins.firestore.NotesRepository
 import app.kotlin.notekins.ui.mainActivity.MainActivity
-import app.kotlin.notekins.ui.mainActivity.ViewModel
-import app.kotlin.notekins.ui.mainActivity.viewModel
 import com.firebase.ui.auth.AuthUI
 
 class SplashActivity : AppCompatActivity() {
@@ -21,7 +15,6 @@ class SplashActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.SplashTheme)
         super.onCreate(savedInstanceState)
 
         NotesRepository.getCurrentUser().observeForever {
@@ -41,7 +34,7 @@ class SplashActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun startLogin() {
+    fun startLogin() {
         val providers = listOf(
             AuthUI.IdpConfig.GoogleBuilder().build()
         )
