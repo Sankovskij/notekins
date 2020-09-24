@@ -7,7 +7,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import app.kotlin.notekins.R
-import app.kotlin.notekins.model.Note
+import app.kotlin.notekins.entity.Note
 import kotlinx.android.synthetic.main.item_view.view.*
 
 class NoteAdapter (val onItemClick: ((Note) -> Unit)? = null) : RecyclerView.Adapter<NoteAdapter.ViewHolder>() {

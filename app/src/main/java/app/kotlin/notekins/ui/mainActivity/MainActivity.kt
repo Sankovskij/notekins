@@ -1,5 +1,7 @@
 package app.kotlin.notekins.ui.mainActivity
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -11,6 +13,13 @@ lateinit var viewModel: ViewModel
 
 
 class MainActivity : AppCompatActivity() {
+
+
+    companion object {
+        fun start(context: Context) = Intent(context, MainActivity::class.java).apply {
+            context.startActivity(this)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

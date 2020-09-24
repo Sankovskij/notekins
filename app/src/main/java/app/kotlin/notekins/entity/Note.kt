@@ -1,4 +1,4 @@
-package app.kotlin.notekins.model
+package app.kotlin.notekins.entity
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
