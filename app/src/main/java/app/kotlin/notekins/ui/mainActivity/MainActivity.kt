@@ -1,4 +1,4 @@
-package app.kotlin.notekins.ui.mainactivity
+package app.kotlin.notekins.ui.mainActivity
 
 import android.content.Context
 import android.content.Intent
@@ -10,7 +10,7 @@ import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
 import app.kotlin.notekins.R
 import app.kotlin.notekins.firestore.NotesRepository
-import app.kotlin.notekins.ui.listofnotes.ListOfNotesFragment
+import app.kotlin.notekins.ui.listOfNotes.ListOfNotesFragment
 import app.kotlin.notekins.ui.logoutdialog.LogoutDialog
 import app.kotlin.notekins.ui.splash.SplashActivity
 import com.firebase.ui.auth.AuthUI
@@ -70,8 +70,10 @@ class MainActivity : AppCompatActivity() {
                 onBackPressed()
                 true
             }
-           R.id.logout -> showLogoutDialog().let { true }
-
+          R.id.logout -> {
+             showLogoutDialog()
+              true
+          }
             else -> super.onOptionsItemSelected(item)
 
         }
@@ -88,6 +90,8 @@ class MainActivity : AppCompatActivity() {
                 finish()
             }
     }
+
+
 
 
     }

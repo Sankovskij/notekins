@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import app.kotlin.notekins.R
 import app.kotlin.notekins.firestore.NotesRepository
-import app.kotlin.notekins.ui.mainactivity.MainActivity
+import app.kotlin.notekins.ui.mainActivity.MainActivity
 import com.firebase.ui.auth.AuthUI
 
 class SplashActivity : AppCompatActivity() {
@@ -17,17 +17,17 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+    }
+
+    override fun onResume() {
+        super.onResume()
         NotesRepository.getCurrentUser().observeForever {
             if (it == null) {
                 startLogin()
-            }
-            startMainActivity()
 
+            } else startMainActivity()
         }
-
-
     }
-
 
     private fun startMainActivity(){
         MainActivity.start(this)
@@ -46,8 +46,7 @@ class SplashActivity : AppCompatActivity() {
             .setAvailableProviders(providers)
             .build()
 
+
         startActivity(intent)
     }
-
-
 }

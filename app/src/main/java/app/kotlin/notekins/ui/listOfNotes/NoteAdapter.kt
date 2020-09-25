@@ -1,4 +1,4 @@
-package app.kotlin.notekins.ui.listofnotes
+package app.kotlin.notekins.ui.listOfNotes
 
 import android.view.LayoutInflater
 import android.view.View

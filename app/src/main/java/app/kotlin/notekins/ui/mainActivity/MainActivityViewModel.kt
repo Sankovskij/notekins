@@ -1,4 +1,4 @@
-package app.kotlin.notekins.ui.mainactivity
+package app.kotlin.notekins.ui.mainActivity
 
 
 import androidx.lifecycle.ViewModel
