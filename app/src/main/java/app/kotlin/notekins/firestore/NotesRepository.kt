@@ -3,9 +3,9 @@ package app.kotlin.notekins.firestore
 import app.kotlin.notekins.entity.Note
 
 
-object NotesRepository {
+class NotesRepository(val dataProvider: DataProvider) {
 
-    private val dataProvider: DataProvider = FirestoreProvider()
+
 
     fun getCurrentUser() = dataProvider.getCurrentUser()
     fun getNotes() = dataProvider.subscribeToAllNotes()

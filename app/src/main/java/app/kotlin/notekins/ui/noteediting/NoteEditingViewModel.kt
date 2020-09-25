@@ -9,7 +9,7 @@ import app.kotlin.notekins.entity.Note
 import app.kotlin.notekins.ui.listofnotes.ListOfNotesViewModel
 import java.util.*
 
-class NoteEditingViewModel : ViewModel() {
+class NoteEditingViewModel(val notesRepository: NotesRepository) : ViewModel() {
 
     private var editingNote = Note()
     private val editingNoteMutableLiveData = MutableLiveData<Note>()
@@ -31,7 +31,7 @@ class NoteEditingViewModel : ViewModel() {
         title?.let {
             if (it.length < 3) return
         }
-        NotesRepository.saveNote(note.copy(
+        notesRepository.saveNote(note.copy(
             title = title.toString(),
             text = text.toString(),
             lastChange = Date()))

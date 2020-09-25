@@ -10,7 +10,7 @@ import app.kotlin.notekins.firestore.NotesRepository
 import app.kotlin.notekins.entity.Note
 import app.kotlin.notekins.ui.noteediting.NoteEditingFragment
 
-class ListOfNotesViewModel : ViewModel() {
+class ListOfNotesViewModel(val notesRepository: NotesRepository) : ViewModel() {
 
     private val hiddenNotes = MutableLiveData<List<Note>>()
     private val noteErrorMutable = MutableLiveData<Throwable>()
@@ -20,7 +20,7 @@ class ListOfNotesViewModel : ViewModel() {
     }
 
     init {
-        NotesRepository.getNotes().observeForever {
+        notesRepository.getNotes().observeForever {
         when (it){
             is NoteResult.Success<*> ->  hiddenNotes.value  = it.data as? List<Note>
             is NoteResult.Error -> noteErrorMutable.value = it.error

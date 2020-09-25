@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import org.koin.android.viewmodel.ext.android.viewModel
 import app.kotlin.notekins.R
 import app.kotlin.notekins.entity.Note
 import kotlinx.android.synthetic.main.note_editing_fragment.*
@@ -24,7 +24,7 @@ class NoteEditingFragment : Fragment() {
     }
 
     private val dateFormat = "dd.MM.yy HH.mm"
-    private lateinit var viewModel: NoteEditingViewModel
+    val viewModel: NoteEditingViewModel by viewModel()
 
 
     override fun onCreateView(
@@ -36,7 +36,7 @@ class NoteEditingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(NoteEditingViewModel::class.java)
+
         viewModel.getEditingNoteLiveData().observe(viewLifecycleOwner, {
             initView(it)
             it.initToolbar()

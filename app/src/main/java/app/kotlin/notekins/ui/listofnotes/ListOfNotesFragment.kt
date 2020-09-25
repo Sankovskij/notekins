@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import app.kotlin.notekins.R
 import kotlinx.android.synthetic.main.list_of_notes_fragment.*
 import kotlinx.android.synthetic.main.list_of_notes_fragment.toolbar
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class ListOfNotesFragment : DialogFragment() {
 
@@ -19,8 +19,8 @@ class ListOfNotesFragment : DialogFragment() {
         fun newInstance() = ListOfNotesFragment()
     }
 
-    private lateinit var viewModel: ListOfNotesViewModel
     lateinit var adapter: NoteAdapter
+    val viewModel: ListOfNotesViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +34,6 @@ class ListOfNotesFragment : DialogFragment() {
 
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
-        viewModel = ViewModelProvider(this).get(ListOfNotesViewModel::class.java)
         rv_notes.layoutManager = GridLayoutManager(context, 2)
 
 

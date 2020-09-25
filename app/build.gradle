@@ -46,6 +46,9 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
     implementation 'com.google.firebase:firebase-auth:19.4.0'
 
+    implementation 'org.koin:koin-android:1.0.1'
+    implementation 'org.koin:koin-android-viewmodel:1.0.1'
+
     kapt "androidx.lifecycle:lifecycle-compiler:2.2.0"
 
     testImplementation 'junit:junit:4.13'

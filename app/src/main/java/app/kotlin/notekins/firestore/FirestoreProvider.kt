@@ -8,15 +8,15 @@ import app.kotlin.notekins.errors.NoAuthException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class FirestoreProvider : DataProvider {
+class FirestoreProvider(val firebaseAuth: FirebaseAuth, val store: FirebaseFirestore) : DataProvider {
 
     companion object {
         private const val NOTES_COLLECTION = "notes"
         private const val USERS_COLLECTION = "users"
     }
     private val currentUser
-        get() = FirebaseAuth.getInstance().currentUser
-    private val store by lazy { FirebaseFirestore.getInstance() }
+        get() = firebaseAuth.currentUser
+
 
     private val notesReference
         get() = currentUser?.let {
