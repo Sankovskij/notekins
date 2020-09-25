@@ -10,7 +10,7 @@ import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
 import app.kotlin.notekins.R
 import app.kotlin.notekins.firestore.NotesRepository
-import app.kotlin.notekins.ui.listOfNotes.ListOfNotesFragment
+import app.kotlin.notekins.ui.listofnotes.ListOfNotesFragment
 import app.kotlin.notekins.ui.logoutdialog.LogoutDialog
 import app.kotlin.notekins.ui.splash.SplashActivity
 import com.firebase.ui.auth.AuthUI

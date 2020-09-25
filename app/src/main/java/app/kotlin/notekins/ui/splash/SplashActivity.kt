@@ -1,7 +1,6 @@
 package app.kotlin.notekins.ui.splash
 
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.widget.Toast
 import app.kotlin.notekins.R
 import app.kotlin.notekins.firestore.NotesRepository
@@ -9,16 +8,6 @@ import app.kotlin.notekins.ui.mainActivity.MainActivity
 import com.firebase.ui.auth.AuthUI
 
 class SplashActivity : AppCompatActivity() {
-
-
-    companion object {
-        private const val RC_SIGN_IN = 4242
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onResume() {
         super.onResume()
@@ -51,7 +40,6 @@ class SplashActivity : AppCompatActivity() {
             .setTheme(R.style.LoginStyle)
             .setAvailableProviders(providers)
             .build()
-
 
         startActivity(intent)
     }

@@ -1,4 +1,4 @@
-package app.kotlin.notekins.ui.listOfNotes
+package app.kotlin.notekins.ui.listofnotes
 
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
@@ -8,7 +8,7 @@ import app.kotlin.notekins.R
 import app.kotlin.notekins.firestore.NoteResult
 import app.kotlin.notekins.firestore.NotesRepository
 import app.kotlin.notekins.entity.Note
-import app.kotlin.notekins.ui.noteEditing.NoteEditingFragment
+import app.kotlin.notekins.ui.noteediting.NoteEditingFragment
 
 class ListOfNotesViewModel : ViewModel() {
 

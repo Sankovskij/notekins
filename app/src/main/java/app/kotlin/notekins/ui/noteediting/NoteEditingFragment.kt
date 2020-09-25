@@ -1,4 +1,4 @@
-package app.kotlin.notekins.ui.noteEditing
+package app.kotlin.notekins.ui.noteediting
 
 import android.os.Bundle
 import android.text.Editable
