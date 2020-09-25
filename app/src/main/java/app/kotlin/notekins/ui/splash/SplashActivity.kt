@@ -2,6 +2,7 @@ package app.kotlin.notekins.ui.splash
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import app.kotlin.notekins.R
 import app.kotlin.notekins.firestore.NotesRepository
 import app.kotlin.notekins.ui.mainActivity.MainActivity
@@ -23,7 +24,12 @@ class SplashActivity : AppCompatActivity() {
         super.onResume()
         NotesRepository.getCurrentUser().observeForever {
             if (it == null) {
-                startLogin()
+                try {
+                    startLogin()
+                } catch(t: Throwable) {
+                    Toast.makeText (this, "Что-то не так с авторизацией", Toast.LENGTH_SHORT).show()
+                }
+
 
             } else startMainActivity()
         }
