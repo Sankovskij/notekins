@@ -3,9 +3,7 @@ package app.kotlin.notekins.ui.noteediting
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -83,7 +81,14 @@ class NoteEditingFragment : Fragment() {
             } ?: getString(R.string.new_note)
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.edinitg_menu,menu)
+    }
+
 }
+
+
 
 
 
