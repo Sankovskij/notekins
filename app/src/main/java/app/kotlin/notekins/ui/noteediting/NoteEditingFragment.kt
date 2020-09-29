@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import org.koin.android.viewmodel.ext.android.viewModel
 import app.kotlin.notekins.R
 import app.kotlin.notekins.entity.Note
+import app.kotlin.notekins.extensions.getColorInt
 import kotlinx.android.synthetic.main.note_editing_fragment.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,6 +24,7 @@ class NoteEditingFragment : Fragment() {
 
     private val dateFormat = "dd.MM.yy HH.mm"
     val viewModel: NoteEditingViewModel by viewModel()
+    var color: Note.Color = Note.Color.WHITE
 
 
     override fun onCreateView(
@@ -35,7 +37,6 @@ class NoteEditingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-
         viewModel.getEditingNoteLiveData().observe(viewLifecycleOwner, {
             initView(it)
             it.initToolbar()
@@ -56,21 +57,32 @@ class NoteEditingFragment : Fragment() {
                 Note.Color.BLUE -> R.color.color_blue
             }
             toolbar.setBackgroundColor(ResourcesCompat.getColor(resources, color, null))
+
         }
         titleEt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(p0: Editable?) {
-                viewModel.saveNote(note, titleEt.text, bodyEt.text)
+                viewModel.saveNote(note, titleEt.text, bodyEt.text, color)
             }
         })
         bodyEt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(p0: Editable?) {
-                viewModel.saveNote(note, titleEt.text, bodyEt.text)
+                viewModel.saveNote(note, titleEt.text, bodyEt.text, color)
             }
         })
+
+        colorPicker.onColorClickListener = {
+            color = it
+            this.context?.let { it1 -> it.getColorInt(it1) }?.let { it2 ->
+                toolbar.setBackgroundColor(
+                    it2
+                )
+            }
+            viewModel.saveNote(note, titleEt.text, bodyEt.text, color)
+        }
     }
 
     private fun Note.initToolbar() {
@@ -86,8 +98,31 @@ class NoteEditingFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.clear()
         inflater.inflate(R.menu.editmain, menu)
-
     }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+
+        R.id.palette -> {
+            togglePallete()
+            true
+        }
+        R.id.delete -> {
+            viewModel.deleteNote()
+            activity?.onBackPressed()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
+    }
+
+    private fun togglePallete() {
+        if (colorPicker.isOpen) {
+            colorPicker.close()
+        } else {
+            colorPicker.open()
+        }
+    }
+
+
 }
 
 

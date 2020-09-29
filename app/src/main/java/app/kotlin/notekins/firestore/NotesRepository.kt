@@ -10,6 +10,7 @@ class NotesRepository(val dataProvider: DataProvider) {
     fun getCurrentUser() = dataProvider.getCurrentUser()
     fun getNotes() = dataProvider.subscribeToAllNotes()
     fun saveNote(note: Note) = dataProvider.saveNote(note)
+    fun delete(note: Note) = dataProvider.delete(note)
 
 
 }

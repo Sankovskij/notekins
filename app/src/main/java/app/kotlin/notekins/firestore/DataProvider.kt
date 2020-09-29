@@ -9,4 +9,5 @@ interface DataProvider {
     fun getCurrentUser() : LiveData<User?>
     fun subscribeToAllNotes() : LiveData<NoteResult>
     fun saveNote(note: Note) : LiveData<NoteResult>
+    fun delete(note: Note) : LiveData<NoteResult>
 }
