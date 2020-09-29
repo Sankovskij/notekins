@@ -1,19 +1,15 @@
-package app.kotlin.notekins.ui.noteEditing
+package app.kotlin.notekins.ui.noteediting
 
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import app.kotlin.notekins.R
-import app.kotlin.notekins.firestore.NotesRepository
-import app.kotlin.notekins.model.Note
+import app.kotlin.notekins.entity.Note
 import kotlinx.android.synthetic.main.note_editing_fragment.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -39,9 +35,9 @@ class NoteEditingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(NoteEditingViewModel::class.java)
-        viewModel.getEditingNoteLiveData().observe(viewLifecycleOwner, Observer {
+        viewModel.getEditingNoteLiveData().observe(viewLifecycleOwner, {
             initView(it)
-            initToolbar(it)
+            it.initToolbar()
         })
     }
 
@@ -76,16 +72,23 @@ class NoteEditingFragment : Fragment() {
         })
     }
 
-    private fun initToolbar(note : Note) {
-        (activity as AppCompatActivity)?.let { appCompatActivity ->
+    private fun Note.initToolbar() {
+        (activity as AppCompatActivity).let { appCompatActivity ->
             appCompatActivity.setSupportActionBar(toolbar)
             appCompatActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            appCompatActivity.supportActionBar?.title = note?.let {
+            appCompatActivity.supportActionBar?.title = this.let {
                 SimpleDateFormat(dateFormat, Locale.getDefault()).format(it.lastChange)
             } ?: getString(R.string.new_note)
         }
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.edinitg_menu,menu)
+    }
+
 }
+
+
 
 
 
