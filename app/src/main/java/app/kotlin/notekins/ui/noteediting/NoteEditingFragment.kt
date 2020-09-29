@@ -3,9 +3,7 @@ package app.kotlin.notekins.ui.noteediting
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -36,6 +34,7 @@ class NoteEditingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
 
         viewModel.getEditingNoteLiveData().observe(viewLifecycleOwner, {
             initView(it)
@@ -82,6 +81,12 @@ class NoteEditingFragment : Fragment() {
                 SimpleDateFormat(dateFormat, Locale.getDefault()).format(it.lastChange)
             } ?: getString(R.string.new_note)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        inflater.inflate(R.menu.editmain, menu)
+
     }
 }
 

@@ -15,13 +15,14 @@ class SplashViewModel(private val notesRepository: NotesRepository) : ViewModel(
 
     init {
         notesRepository.getCurrentUser().observeForever {
+
             try {
-            if (it != null) {
-                hiddenUser.value = it
-            } else {
-                throw NoAuthException()
-            }
-        } catch(t: Throwable) {
+                if (it != null) {
+                    hiddenUser.value = it
+                } else {
+                    throw NoAuthException()
+                }
+            } catch(t: Throwable) {
                 authErrorMutable.value = t
             }
 

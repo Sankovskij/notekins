@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    fun onLogout() {
+    private fun onLogout() {
         AuthUI.getInstance()
             .signOut(this)
             .addOnCompleteListener {
