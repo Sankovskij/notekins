@@ -6,41 +6,45 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import app.kotlin.notekins.R
+import app.kotlin.notekins.errors.NoAuthException
 import app.kotlin.notekins.ui.mainActivity.MainActivity
 import com.firebase.ui.auth.AuthUI
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.getViewModel
+import kotlin.coroutines.CoroutineContext
 
-class SplashActivity : AppCompatActivity() {
+class SplashActivity : AppCompatActivity(), CoroutineScope {
 
     lateinit var viewModel: SplashViewModel
+    override val coroutineContext: CoroutineContext by lazy {
+        Dispatchers.Main + Job()
+    }
 
     companion object {
         private const val RC_SIGN_IN = 4242
     }
 
-    private val authobserver = Observer<app.kotlin.notekins.entity.User> { result ->
-        result?.let {
-            startMainActivity()
-        }?: return@Observer
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = getViewModel()
-        viewModel.user.observe(this, authobserver)
-        startLogin()
+
     }
 
 
     override fun onResume() {
         super.onResume()
-        viewModel.user.observe(this, authobserver)
+        launch {
+            try {
+                viewModel.requestUser().await()?.let {
+                    startMainActivity()
+                } ?: throw NoAuthException()
+            } catch (t : NoAuthException) {
+                startLogin()
+            }
         }
-
-
-    override fun onPause() {
-        super.onPause()
-        viewModel.user.removeObserver(authobserver)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

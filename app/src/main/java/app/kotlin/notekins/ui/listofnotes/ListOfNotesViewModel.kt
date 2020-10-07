@@ -9,8 +9,18 @@ import app.kotlin.notekins.firestore.NoteResult
 import app.kotlin.notekins.firestore.NotesRepository
 import app.kotlin.notekins.entity.Note
 import app.kotlin.notekins.ui.noteediting.NoteEditingFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
-class ListOfNotesViewModel(val notesRepository: NotesRepository) : ViewModel() {
+class ListOfNotesViewModel(val notesRepository: NotesRepository) : ViewModel(), CoroutineScope {
+
+    override val coroutineContext: CoroutineContext by lazy {
+        Dispatchers.Main + Job()
+    }
 
     private val hiddenNotes = MutableLiveData<List<Note>>()
     private val noteErrorMutable = MutableLiveData<Throwable>()
@@ -19,14 +29,20 @@ class ListOfNotesViewModel(val notesRepository: NotesRepository) : ViewModel() {
         lateinit var editingNoteLiveData: LiveData<Note>
     }
 
+
+
     init {
-        notesRepository.getNotes().observeForever {
-        when (it){
-            is NoteResult.Success<*> ->  hiddenNotes.value  = it.data as? List<Note>
-            is NoteResult.Error -> noteErrorMutable.value = it.error
-        }
+        launch {
+            val notesChannel = notesRepository.getNotes()
+            notesChannel.consumeEach {
+                when (it) {
+                    is NoteResult.Success<*> -> hiddenNotes.value  = it.data as? List<Note>
+                    is NoteResult.Error -> noteErrorMutable.value = it.error
+                }
+            }
         }
     }
+
 
     val notes: LiveData<List<Note>> = hiddenNotes
      val noteError: LiveData<Throwable> = noteErrorMutable

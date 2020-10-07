@@ -12,16 +12,24 @@ import app.kotlin.notekins.R
 import app.kotlin.notekins.entity.Note
 import app.kotlin.notekins.extensions.getColorInt
 import kotlinx.android.synthetic.main.note_editing_fragment.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.coroutines.CoroutineContext
 
 
-class NoteEditingFragment : Fragment() {
+class NoteEditingFragment : Fragment(), CoroutineScope {
 
     companion object {
         fun newInstance() = NoteEditingFragment()
     }
 
+    override val coroutineContext: CoroutineContext by lazy {
+        Dispatchers.Main + Job()
+    }
     private val dateFormat = "dd.MM.yy HH.mm"
     val viewModel: NoteEditingViewModel by viewModel()
     var color: Note.Color = Note.Color.WHITE
@@ -63,14 +71,14 @@ class NoteEditingFragment : Fragment() {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(p0: Editable?) {
-                viewModel.saveNote(note, titleEt.text, bodyEt.text, color)
+                launch { viewModel.saveNote(note, titleEt.text, bodyEt.text, color) }
             }
         })
         bodyEt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(p0: Editable?) {
-                viewModel.saveNote(note, titleEt.text, bodyEt.text, color)
+               launch {  viewModel.saveNote(note, titleEt.text, bodyEt.text, color) }
             }
         })
 
@@ -81,7 +89,7 @@ class NoteEditingFragment : Fragment() {
                     it2
                 )
             }
-            viewModel.saveNote(note, titleEt.text, bodyEt.text, color)
+            launch {  viewModel.saveNote(note, titleEt.text, bodyEt.text, color) }
         }
     }
 

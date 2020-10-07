@@ -6,29 +6,18 @@ import androidx.lifecycle.ViewModel
 import app.kotlin.notekins.entity.User
 import app.kotlin.notekins.errors.NoAuthException
 import app.kotlin.notekins.firestore.NotesRepository
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
-class SplashViewModel(private val notesRepository: NotesRepository) : ViewModel() {
-
-    private val hiddenUser = MutableLiveData<User>()
-    private val authErrorMutable = MutableLiveData<Throwable>()
+class SplashViewModel(private val notesRepository: NotesRepository) : ViewModel(), CoroutineScope {
 
 
-    init {
-        notesRepository.getCurrentUser().observeForever {
-
-            try {
-                if (it != null) {
-                    hiddenUser.value = it
-                } else {
-                    throw NoAuthException()
-                }
-            } catch(t: Throwable) {
-                authErrorMutable.value = t
-            }
-
+    override val coroutineContext: CoroutineContext by lazy {
+        Dispatchers.Default + Job()
     }
-}
-    val user: LiveData<User> = hiddenUser
-    val authError: LiveData<Throwable> = authErrorMutable
 
+
+    fun requestUser() = async {
+        notesRepository.getCurrentUser()
+    }
 }
